@@ -38,7 +38,7 @@ void main() {
         'name': faker.person.name(),
       },
     );
-    final account = await sut.auth(params);
+    await sut.auth(params);
 
     verify(
       httpClient.request(
