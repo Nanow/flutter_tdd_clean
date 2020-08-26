@@ -2,8 +2,8 @@
 
 > ## Caso de sucess
 
-1. Sistema valida os dados
-2. Sistema faz uma requisção para URL da API de login
+1. Sistema valida os dados (done)
+2. Sistema faz uma requisção para URL da API de logi (done)
 3. Sistema valida os dados recebidos da API
 4. Sistema entrega os dados da conta de usuário
 
