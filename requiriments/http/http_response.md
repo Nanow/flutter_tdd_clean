@@ -4,8 +4,9 @@
 
 1. ✅ Request como verbo http válido (post)
 2. Passar nos headers o content type JSON
-3. Ok - 200 e responsta com dados
-4. No content - 204 e resposta sem dados
+3. Chamar request como o boddy correto
+4. Ok - 200 e responsta com dados
+5. No content - 204 e resposta sem dados
 
 > ## Errrors
 
