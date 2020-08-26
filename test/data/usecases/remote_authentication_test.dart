@@ -64,4 +64,15 @@ void main() {
     final response = sut.auth(params);
     expect(response, throwsA(DomainError.unexpected));
   });
+  test('Should throw InvalidCredentialsError  if Httpclient return 401',
+      () async {
+    when(httpClient.request(
+      url: anyNamed('url'),
+      method: anyNamed('method'),
+      body: anyNamed('body'),
+    )).thenThrow(HttpError.unauthorized);
+
+    final response = sut.auth(params);
+    expect(response, throwsA(DomainError.invalidCredentails));
+  });
 }
