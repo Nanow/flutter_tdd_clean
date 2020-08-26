@@ -4,8 +4,8 @@
 
 1. ✅ Sistema valida os dados
 2. ✅ Sistema faz uma requisção para URL da API de logi
-3. Sistema valida os dados recebidos da API
-4. Sistema entrega os dados da conta de usuário
+3. ✅ Sistema valida os dados recebidos da API
+4. ✅ Sistema entrega os dados da conta de usuário
 
 > ## Exceção - URL inválida
 
@@ -17,7 +17,7 @@
 
 > ## Exceção - Resposta inválida
 
-1. Sistema retorna uma mensagem de erro inesperado
+1. ✅ Sistema retorna uma mensagem de erro inesperado
 
 > ## Exceção - Falha no servidor
 
