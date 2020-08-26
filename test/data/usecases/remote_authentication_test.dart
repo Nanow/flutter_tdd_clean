@@ -2,6 +2,7 @@ import 'package:faker/faker.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 
+import 'package:flutter_clean_study/domain/entities/entities.dart';
 import 'package:flutter_clean_study/domain/helpers/helpers.dart';
 import 'package:flutter_clean_study/domain/usecases/usecases.dart';
 
@@ -27,7 +28,17 @@ void main() {
   });
 
   test('Should call HttpClient with correct values', () async {
-    await sut.auth(params);
+    when(httpClient.request(
+      url: anyNamed('url'),
+      method: anyNamed('method'),
+      body: anyNamed('body'),
+    )).thenAnswer(
+      (_) async => {
+        'accessToken': faker.guid.guid(),
+        'name': faker.person.name(),
+      },
+    );
+    final account = await sut.auth(params);
 
     verify(
       httpClient.request(
@@ -74,5 +85,23 @@ void main() {
 
     final response = sut.auth(params);
     expect(response, throwsA(DomainError.invalidCredentails));
+  });
+  test('Should return an Account if  HttpClient return 200', () async {
+    final accessToken = faker.guid.guid();
+
+    when(httpClient.request(
+      url: anyNamed('url'),
+      method: anyNamed('method'),
+      body: anyNamed('body'),
+    )).thenAnswer(
+      (_) async => {
+        'accessToken': accessToken,
+        'name': faker.person.name(),
+      },
+    );
+
+    final account = await sut.auth(params);
+
+    expect(account.token, accessToken);
   });
 }
