@@ -21,7 +21,7 @@
 
 > ## Exceção - Falha no servidor
 
-1. Sistema retorna uma mensagem de erro inesperado
+1. (done) Sistema retorna uma mensagem de erro inesperado
 
 > ## Exceção - Credênciais inválidas
 
