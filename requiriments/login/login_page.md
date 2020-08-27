@@ -15,6 +15,6 @@
 11. ✅ Desabilitar o botão de fazer login se algum campo for inválido
 12. ✅ Exibir loading no inicio da ação de loading
 13. ✅ Chamar o método authenticar
-14. Exibir mensagem de erro caso o login falhe
+14. ✅ Exibir mensagem de erro caso o login falhe
 15. Esconder loading no fim da ação de login
 16. Fechar Strams quando a página f or  encerrada
