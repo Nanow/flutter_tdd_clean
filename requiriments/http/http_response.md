@@ -18,7 +18,7 @@
 
 > ## Execução - Status code diferente dos citados acima
 
-1. Internal server error - 500
+1. ✅ Internal server error - 500
 
 > ## Execução - Htttp request deu alguma excessão
 
@@ -26,4 +26,4 @@
 
 > ## Execução - Verbo http Inválido
 
-1. Internal server error - 500
+1. ✅ Internal server error - 500
