@@ -45,6 +45,10 @@ void main() {
       );
     }
 
+    void mockError() {
+      return mockRequest().thenThrow(Exception());
+    }
+
     setUp(() {
       mockResponse(200);
     });
@@ -139,6 +143,13 @@ void main() {
       final feature = sut.request(url: url, method: 'post');
 
       expect(feature, throwsA(HttpError.notFound));
+    });
+    test('Should returns ServerError if throws', () async {
+      mockError();
+
+      final feature = sut.request(url: url, method: 'post');
+
+      expect(feature, throwsA(HttpError.serverError));
     });
   });
 }
