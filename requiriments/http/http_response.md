@@ -14,7 +14,7 @@
 2. Unauthorized - 401
 3. Forbidden - 403
 4. Not found - 404
-5. Internar server error - 500
+5. ✅ Internar server error - 500
 
 > ## Execução - Status code diferente dos citados acima
 
@@ -22,7 +22,7 @@
 
 > ## Execução - Htttp request deu alguma excessão
 
-1. Internal server error - 500
+1. ✅ Internal server error - 500
 
 > ## Execução - Verbo http Inválido
 

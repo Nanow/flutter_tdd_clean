@@ -99,5 +99,20 @@ void main() {
 
       expect(feature, throwsA(HttpError.badRequest));
     });
+    test('Should returns ServerError if post returns 500', () async {
+      mockResponse(500);
+
+      final feature = sut.request(url: url, method: 'post');
+
+      expect(feature, throwsA(HttpError.serverError));
+    });
+
+    test('Should returns UnanuthorizedError if post returns 401', () async {
+      mockResponse(500);
+
+      final feature = sut.request(url: url, method: 'post');
+
+      expect(feature, throwsA(HttpError.serverError));
+    });
   });
 }
