@@ -239,4 +239,14 @@ void main() {
       expect(find.text('main Error'), findsOneWidget);
     },
   );
+
+  testWidgets(
+    "Should close streams ond dipose",
+    (WidgetTester tester) async {
+      await loadPage(tester);
+      addTearDown(() {
+        verify(presenter.dispose()).called(1);
+      });
+    },
+  );
 }
