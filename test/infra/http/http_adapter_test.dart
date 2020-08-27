@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:faker/faker.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart';
@@ -5,10 +7,10 @@ import 'package:meta/meta.dart';
 
 import 'package:mockito/mockito.dart';
 
-class HttpAdatper {
+class HttpAdapter {
   final Client dio;
 
-  HttpAdatper(this.dio);
+  HttpAdapter(this.dio);
 
   Future<void> request({
     @required String url,
@@ -19,26 +21,34 @@ class HttpAdatper {
       'content-type': 'application/json',
       'accept': 'application/json',
     };
-    await this.dio.post(url, headers: headers);
+    await this.dio.post(url, headers: headers, body: jsonEncode(body));
   }
 }
 
 class ClientSpy extends Mock implements Client {}
 
 void main() {
-  setUp(() {});
+  HttpAdapter sut;
+  ClientSpy client;
+  String url;
+
+  setUp(() {
+    client = ClientSpy();
+    sut = HttpAdapter(client);
+    url = faker.internet.httpUrl();
+  });
+
   group('post', () {
     test('Should call post  with  correct values', () {
-      final client = ClientSpy();
-      final sut = HttpAdatper(client);
-      final url = faker.internet.httpUrl();
-      sut.request(url: url, method: 'post');
+      sut.request(url: url, method: 'post', body: {'any_key': 'any_value'});
 
       verify(
-        client.post(url, headers: {
-          'content-type': 'application/json',
-          'accept': 'application/json',
-        }),
+        client.post(url,
+            headers: {
+              'content-type': 'application/json',
+              'accept': 'application/json',
+            },
+            body: '{"any_key":"any_value"}'),
       );
     });
   });
