@@ -40,27 +40,34 @@ class LoginPage extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.only(top: 8.0, bottom: 32),
                       child: StreamBuilder<String>(
-                          stream: presenter.passwordErrorController,
-                          builder: (context, snapshot) {
-                            return TextFormField(
-                              decoration: InputDecoration(
-                                labelText: 'Senha',
-                                icon: Icon(
-                                  Icons.vpn_key,
-                                ),
-                                errorText: snapshot.data?.isEmpty == true
-                                    ? null
-                                    : snapshot.data,
+                        stream: presenter.passwordErrorController,
+                        builder: (context, snapshot) {
+                          return TextFormField(
+                            decoration: InputDecoration(
+                              labelText: 'Senha',
+                              icon: Icon(
+                                Icons.vpn_key,
                               ),
-                              obscureText: true,
-                              onChanged: presenter.validatePassword,
-                            );
-                          }),
+                              errorText: snapshot.data?.isEmpty == true
+                                  ? null
+                                  : snapshot.data,
+                            ),
+                            obscureText: true,
+                            onChanged: presenter.validatePassword,
+                          );
+                        },
+                      ),
                     ),
-                    RaisedButton(
-                      onPressed: null,
-                      child: Text('Entrar'.toUpperCase()),
-                    ),
+                    StreamBuilder<bool>(
+                        stream: presenter.isFormValidController,
+                        builder: (context, snapshot) {
+                          return RaisedButton(
+                            onPressed: snapshot.data != null && snapshot.data
+                                ? () {}
+                                : null,
+                            child: Text('Entrar'.toUpperCase()),
+                          );
+                        }),
                     FlatButton.icon(
                         onPressed: () {},
                         icon: Icon(Icons.person),

@@ -13,18 +13,23 @@ void main() {
   LoginPresenter presenter;
   StreamController<String> emailErrorController;
   StreamController<String> passwordErrorController;
+  StreamController<bool> isFormValidController;
 
   Future<void> loadPage(WidgetTester tester) async {
     presenter = LoginPresenterSpy();
 
     emailErrorController = StreamController<String>();
     passwordErrorController = StreamController<String>();
+    isFormValidController = StreamController<bool>();
 
     when(presenter.emailErrorController).thenAnswer(
       (_) => emailErrorController.stream,
     );
     when(presenter.passwordErrorController).thenAnswer(
       (_) => passwordErrorController.stream,
+    );
+    when(presenter.isFormValidController).thenAnswer(
+      (_) => isFormValidController.stream,
     );
 
     final loginPage = MaterialApp(home: LoginPage(presenter));
@@ -34,6 +39,7 @@ void main() {
   tearDown(() {
     emailErrorController.close();
     passwordErrorController.close();
+    isFormValidController.close();
   });
   testWidgets(
     'Should load with correct initial state',
@@ -124,6 +130,7 @@ void main() {
       expect(find.text('any error'), findsOneWidget);
     },
   );
+
   testWidgets(
     'Should not present error if password is empty',
     (WidgetTester tester) async {
@@ -141,6 +148,30 @@ void main() {
         passwordTextchildren,
         findsOneWidget,
       );
+    },
+  );
+  testWidgets(
+    'Should enable buttom if form is valid',
+    (WidgetTester tester) async {
+      await loadPage(tester);
+
+      isFormValidController.add(true);
+      await tester.pump();
+
+      final button = tester.widget<RaisedButton>(find.byType(RaisedButton));
+      expect(button.onPressed, isNotNull);
+    },
+  );
+  testWidgets(
+    'Should enable buttom if form is valid',
+    (WidgetTester tester) async {
+      await loadPage(tester);
+
+      isFormValidController.add(false);
+      await tester.pump();
+
+      final button = tester.widget<RaisedButton>(find.byType(RaisedButton));
+      expect(button.onPressed, null);
     },
   );
 }
