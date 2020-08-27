@@ -39,16 +39,23 @@ class LoginPage extends StatelessWidget {
                         }),
                     Padding(
                       padding: const EdgeInsets.only(top: 8.0, bottom: 32),
-                      child: TextFormField(
-                        decoration: InputDecoration(
-                          labelText: 'Senha',
-                          icon: Icon(
-                            Icons.vpn_key,
-                          ),
-                        ),
-                        obscureText: true,
-                        onChanged: presenter.validatePassword,
-                      ),
+                      child: StreamBuilder<String>(
+                          stream: presenter.passwordErrorController,
+                          builder: (context, snapshot) {
+                            return TextFormField(
+                              decoration: InputDecoration(
+                                labelText: 'Senha',
+                                icon: Icon(
+                                  Icons.vpn_key,
+                                ),
+                                errorText: snapshot.data?.isEmpty == true
+                                    ? null
+                                    : snapshot.data,
+                              ),
+                              obscureText: true,
+                              onChanged: presenter.validatePassword,
+                            );
+                          }),
                     ),
                     RaisedButton(
                       onPressed: null,
