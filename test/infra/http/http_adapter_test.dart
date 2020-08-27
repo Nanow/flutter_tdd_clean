@@ -107,12 +107,12 @@ void main() {
       expect(feature, throwsA(HttpError.serverError));
     });
 
-    test('Should returns UnanuthorizedError if post returns 401', () async {
-      mockResponse(500);
+    test('Should returns UnauthorizedError if post returns 401', () async {
+      mockResponse(401);
 
       final feature = sut.request(url: url, method: 'post');
 
-      expect(feature, throwsA(HttpError.serverError));
+      expect(feature, throwsA(HttpError.unauthorized));
     });
   });
 }
