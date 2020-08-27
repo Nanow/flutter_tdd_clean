@@ -114,5 +114,20 @@ void main() {
 
       expect(feature, throwsA(HttpError.unauthorized));
     });
+
+    test('Should returns Forbidden if post returns 403', () async {
+      mockResponse(403);
+
+      final feature = sut.request(url: url, method: 'post');
+
+      expect(feature, throwsA(HttpError.forbidden));
+    });
+    test('Should returns NotFoundError if post returns 404', () async {
+      mockResponse(404);
+
+      final feature = sut.request(url: url, method: 'post');
+
+      expect(feature, throwsA(HttpError.notFound));
+    });
   });
 }
