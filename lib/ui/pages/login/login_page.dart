@@ -63,7 +63,7 @@ class LoginPage extends StatelessWidget {
                         builder: (context, snapshot) {
                           return RaisedButton(
                             onPressed: snapshot.data != null && snapshot.data
-                                ? () {}
+                                ? presenter.auth
                                 : null,
                             child: Text('Entrar'.toUpperCase()),
                           );
