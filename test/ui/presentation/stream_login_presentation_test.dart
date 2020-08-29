@@ -75,4 +75,13 @@ main() {
     sut.validatePassword(password);
     sut.validatePassword(password);
   });
+  test('Should emit password error if validation fails', () {
+    sut.passwordErrorStream
+        .listen(expectAsync1((error) => expect(error, null)));
+    sut.isFormValidController
+        .listen(expectAsync1((isValid) => expect(isValid, false)));
+
+    sut.validatePassword(password);
+    sut.validatePassword(password);
+  });
 }
