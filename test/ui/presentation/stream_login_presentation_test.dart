@@ -1,15 +1,20 @@
 import 'package:faker/faker.dart';
+
 import 'package:mockito/mockito.dart';
 
 import 'package:flutter_test/flutter_test.dart';
 
+import 'package:flutter_clean_study/domain/usecases/usecases.dart';
 import 'package:flutter_clean_study/presentation/presenters/presenters.dart';
 import 'package:flutter_clean_study/presentation/protocols/protocols.dart';
 
 class ValidationSpy extends Mock implements Validation {}
 
+class AuthenticationSpy extends Mock implements Authentication {}
+
 main() {
   ValidationSpy validation;
+  AuthenticationSpy authentication;
   StreamLoginPresenter sut;
   String email;
   String password;
@@ -29,7 +34,10 @@ main() {
 
   setUp(() {
     validation = ValidationSpy();
-    sut = StreamLoginPresenter(validation: validation);
+    authentication = AuthenticationSpy();
+
+    sut = StreamLoginPresenter(
+        validation: validation, authentication: authentication);
     email = faker.internet.email();
     password = faker.internet.password();
     mockValidation();
@@ -107,5 +115,16 @@ main() {
     sut.validateEmail('email');
     await Future.delayed(Duration.zero);
     sut.validatePassword('password');
+  });
+
+  test('Shohuld call Authentication with correct values', () async {
+    sut.validateEmail(email);
+    sut.validatePassword(password);
+
+    await sut.auth();
+    verify(
+      authentication
+          .auth(AuthenticationParams(username: email, secret: password)),
+    ).called(1);
   });
 }
