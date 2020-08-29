@@ -12,7 +12,7 @@
 8. ✅ Notificar o passwordErrorStream com null, caso o Valitaion não retorne error
 9. ✅ Não notificar o passwordErrorStream se o valor for igual ao último
 10. ✅ Notificar o isFormValidStream após alterar a senha
-11. Para o formulárioestar válido  todos os Streams de erro precisam estar null e todos os c ampos obrigatórios não podem  estar vazios
+11. ✅ Para o formulárioestar válido  todos os Streams de erro precisam estar null e todos os c ampos obrigatórios não podem  estar vazios
 12. ✅ Não notificar o isFormValidStream se o valor for igual ao último
 13. Chamar o Authentication com email e senha corretos
 14. Notificar o isLoadingStream como true antes de chamar o Authentication.

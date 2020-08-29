@@ -31,7 +31,7 @@ main() {
     validation = ValidationSpy();
     sut = StreamLoginPresenter(validation: validation);
     email = faker.internet.email();
-    email = faker.internet.password();
+    password = faker.internet.password();
     mockValidation();
   });
   test('Should  call Validation with correct email', () {
@@ -44,16 +44,14 @@ main() {
 
     sut.emailErrorStream
         .listen(expectAsync1((error) => expect(error, 'error')));
-    sut.isFormValidController
-        .listen(expectAsync1((error) => expect(error, false)));
+    sut.isFormValidStream.listen(expectAsync1((error) => expect(error, false)));
 
     sut.validateEmail(email);
     sut.validateEmail(email);
   });
   test('Should emit email null if validation fails', () {
     sut.emailErrorStream.listen(expectAsync1((error) => expect(error, null)));
-    sut.isFormValidController
-        .listen(expectAsync1((error) => expect(error, false)));
+    sut.isFormValidStream.listen(expectAsync1((error) => expect(error, false)));
 
     sut.validateEmail(email);
     sut.validateEmail(email);
@@ -69,8 +67,7 @@ main() {
 
     sut.passwordErrorStream
         .listen(expectAsync1((error) => expect(error, 'error')));
-    sut.isFormValidController
-        .listen(expectAsync1((error) => expect(error, false)));
+    sut.isFormValidStream.listen(expectAsync1((error) => expect(error, false)));
 
     sut.validatePassword(password);
     sut.validatePassword(password);
@@ -78,7 +75,7 @@ main() {
   test('Should emit password error if validation fails', () {
     sut.passwordErrorStream
         .listen(expectAsync1((error) => expect(error, null)));
-    sut.isFormValidController
+    sut.isFormValidStream
         .listen(expectAsync1((isValid) => expect(isValid, false)));
 
     sut.validatePassword(password);
@@ -92,10 +89,23 @@ main() {
         .listen(expectAsync1((error) => expect(error, 'error')));
     sut.passwordErrorStream
         .listen(expectAsync1((error) => expect(error, null)));
-    sut.isFormValidController
+    sut.isFormValidStream
         .listen(expectAsync1((isValid) => expect(isValid, false)));
 
     sut.validateEmail(password);
     sut.validatePassword(email);
+  });
+  test(
+      'Should return in order the state of isFormValidStream if Form  is valid',
+      () async {
+    sut.emailErrorStream.listen(expectAsync1((error) => expect(error, null)));
+    sut.passwordErrorStream
+        .listen(expectAsync1((error) => expect(error, null)));
+    sut.isFormValidStream.listen(print);
+    expectLater(sut.isFormValidStream, emitsInOrder([false, true]));
+
+    sut.validateEmail('email');
+    await Future.delayed(Duration.zero);
+    sut.validatePassword('password');
   });
 }
