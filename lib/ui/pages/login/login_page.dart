@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_clean_study/ui/comoponents/spinner_dialog.dart';
 import '../../comoponents/components.dart';
 
 import 'login_presenter.dart';
@@ -23,35 +24,15 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       body: Builder(
         builder: (context) {
-          widget.presenter.isLoadingController.listen((bool isLoading) {
-            if (isLoading) {
-              showDialog(
-                context: context,
-                barrierDismissible: false,
-                child: SimpleDialog(
-                  children: <Widget>[
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        CircularProgressIndicator(),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Text(
-                          'Aguarde...',
-                          textAlign: TextAlign.center,
-                        )
-                      ],
-                    )
-                  ],
-                ),
-              );
-            } else {
-              if (Navigator.of(context).canPop()) {
-                Navigator.of(context).pop();
+          widget.presenter.isLoadingController.listen(
+            (bool isLoading) {
+              if (isLoading) {
+                showLoading(context);
+              } else {
+                hideLoading(context);
               }
-            }
-          });
+            },
+          );
 
           widget.presenter.mainErrorController.listen((error) {
             if (error != null) {
