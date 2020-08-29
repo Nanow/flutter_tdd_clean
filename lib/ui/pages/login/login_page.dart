@@ -36,12 +36,7 @@ class _LoginPageState extends State<LoginPage> {
 
           widget.presenter.mainErrorController.listen((error) {
             if (error != null) {
-              Scaffold.of(context).showSnackBar(
-                SnackBar(
-                  content: Text(error),
-                  backgroundColor: Colors.red[900],
-                ),
-              );
+              showErrorMessage(context, error);
             }
           });
           return SingleChildScrollView(
