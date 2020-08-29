@@ -2,7 +2,7 @@
 
 ## Regras
 
-1. Chamar Validation ao alterar email
+1. ✅ Chamar Validation ao alterar email
 2. Notificar oemailErrorStream com o mesmo erro do validation, caso retorne error
 3. Notificar o emailErrorStream com  null, c aso o validation  não retorne error
 4. Não notificar o emailErrorStream se o valor for igual ao último
