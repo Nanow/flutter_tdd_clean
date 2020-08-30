@@ -12,16 +12,20 @@ class EmailValidation implements FieldValidation {
 }
 
 main() {
+  EmailValidation sut;
+  setUp(() {
+    sut = EmailValidation('any_field');
+  });
   test('Should  return  null if email is empty', () {
-    final sut = EmailValidation('any_field');
-
     final error = sut.validate('');
     expect(error, null);
   });
   test('Should  return  null if email is empty', () {
-    final sut = EmailValidation('any_field');
-
     final error = sut.validate(null);
     expect(error, null);
+  });
+
+  test('Should return null if email is valid', () {
+    expect(sut.validate("dgssantos@hotmail.com"), null);
   });
 }
