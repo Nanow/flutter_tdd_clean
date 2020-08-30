@@ -4,7 +4,6 @@ import 'package:mockito/mockito.dart';
 
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:flutter_clean_study/domain/entities/entities.dart';
 import 'package:flutter_clean_study/domain/usecases/usecases.dart';
 
 import 'package:flutter_clean_study/presentation/presenters/presenters.dart';
@@ -37,11 +36,6 @@ main() {
   PostExpectation mockAuthenticationCall() => when(
         authentication.auth(any),
       );
-
-  void mockAuthentication() {
-    mockAuthenticationCall()
-        .thenAnswer((_) => AccountEntity(token: faker.guid.guid()));
-  }
 
   void mockAuthenticationError(DomainError error) {
     mockAuthenticationCall().thenThrow(error);
