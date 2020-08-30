@@ -1,3 +1,4 @@
+import 'package:meta/meta.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_clean_study/presentation/protocols/protocols.dart';
 import 'package:flutter_clean_study/validation/protocols/protocols.dart';
@@ -10,8 +11,15 @@ class ValidationComposite implements Validation {
   ValidationComposite(this._validations);
 
   @override
-  String validate({String field, String value}) {
-    return null;
+  String validate({@required String field, @required String value}) {
+    String error;
+    for (final validation in _validations) {
+      error = validation.validate(value);
+      if (error != null && error.isNotEmpty) {
+        return error;
+      }
+    }
+    return error;
   }
 }
 
@@ -47,9 +55,17 @@ main() {
     mockValidation3(null);
     sut = ValidationComposite([validation1, validation2, validation3]);
   });
-
-  test('Should returns nulls if all validations returns null or empty', () {
+  test('Should return null if all validations return null or empty', () {
     mockValidation2('');
-    sut.validate(field: 'any_field', value: 'any_value');
+    final error = sut.validate(field: 'any_field', value: 'any_value');
+    expect(error, null);
+  });
+  test('Should the first error found', () {
+    mockValidation1('error_1');
+    mockValidation2('error_2');
+    mockValidation3('error_3');
+    final error = sut.validate(field: 'any_field', value: 'any_value');
+
+    expect(error, 'error_1');
   });
 }
